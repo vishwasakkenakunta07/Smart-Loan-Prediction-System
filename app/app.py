@@ -66,5 +66,29 @@ if st.sidebar.button("Predict"):
         ax.invert_yaxis()
 
         st.pyplot(fig)
+
+        # 🧠 EXPLANATION SECTION (FIXED)
+        st.subheader("Explanation")
+
+        st.write("The model mainly considers the following factors:")
+
+        top3 = top_features.head(3)
+
+        for feature in top3.index:
+            if "Credit_History" in feature:
+                st.write("• Credit History plays a major role in determining loan approval.")
+            elif "ApplicantIncome" in feature:
+                st.write("• Applicant income significantly affects the ability to repay the loan.")
+            elif "LoanAmount" in feature:
+                st.write("• Loan amount impacts the risk associated with approval.")
+            elif "CoapplicantIncome" in feature:
+                st.write("• Co-applicant income supports loan repayment capacity.")
+            elif "Loan_Amount_Term" in feature:
+                st.write("• Loan term duration influences repayment feasibility.")
+            else:
+                st.write(f"• {feature} also contributes to the decision.")
+
+        st.write("Overall, higher importance means the feature has a greater influence on the model's decision.")
+
     else:
         st.write("Feature importance not available for this model.")
