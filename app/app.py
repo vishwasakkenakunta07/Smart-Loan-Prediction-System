@@ -26,7 +26,26 @@ education = st.sidebar.selectbox("Education", ["Graduate", "Not Graduate"])
 self_employed = st.sidebar.selectbox("Self Employed", ["Yes", "No"])
 property_area = st.sidebar.selectbox("Property Area", ["Urban", "Rural", "Semiurban"])
 
-if st.sidebar.button("Predict"):
+# 🔥 Track button click
+predict_clicked = st.sidebar.button("Predict")
+
+# ✅ Show welcome ONLY before clicking predict
+if not predict_clicked:
+    st.markdown("""
+    ### 👋 Welcome!
+
+    This system predicts whether a loan will be approved or rejected based on applicant details.
+
+    👉 **How to use:**
+    - Enter details in the **left sidebar**
+    - Click **Predict**
+    - View results, risk level, and explanation
+
+    📊 The system also explains decisions using feature importance.
+    """)
+
+# ✅ Prediction section
+if predict_clicked:
 
     input_data = {
         'ApplicantIncome': income,
@@ -53,7 +72,7 @@ if st.sidebar.button("Predict"):
     st.write(f"Risk Level: {risk}")
     st.write(f"Confidence: {round(prob*100,2)}%")
 
-    # 📊 FEATURE IMPORTANCE GRAPH
+    # 📊 Feature Importance
     st.subheader("Feature Importance")
 
     importance = get_feature_importance()
@@ -67,7 +86,7 @@ if st.sidebar.button("Predict"):
 
         st.pyplot(fig)
 
-        # 🧠 EXPLANATION SECTION (FIXED)
+        # 🧠 Explanation
         st.subheader("Explanation")
 
         st.write("The model mainly considers the following factors:")
